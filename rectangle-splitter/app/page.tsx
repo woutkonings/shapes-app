@@ -62,6 +62,9 @@ function Home() {
     { id: 1, x: 0, y: 0, width: 100, height: 100, color: getRandomColor() },
   ]);
 
+  // A counter to keep track of unique ids
+  const [rectIdCounter, setRectIdCounter] = useState(2); // Starting from 2 as the first rectangle has id 1
+
   // Function to split a rectangle into two
   const splitRectangle = (id: number) => {
     setRectangles((prevRectangles) => {
@@ -75,10 +78,14 @@ function Home() {
       const splitHorizontal = Math.random() > 0.5;
       const newRectangles: RectangleType[] = [];
 
+      // Use rectIdCounter to ensure unique ids
+      const newId1 = rectIdCounter;
+      const newId2 = rectIdCounter + 1;
+
       if (splitHorizontal) {
         // Split horizontally into two rectangles
         newRectangles.push({
-          id: prevRectangles.length + 1,
+          id: newId1,
           x: rectToSplit.x,
           y: rectToSplit.y,
           width: rectToSplit.width,
@@ -87,7 +94,7 @@ function Home() {
         });
 
         newRectangles.push({
-          id: prevRectangles.length + 2,
+          id: newId2,
           x: rectToSplit.x,
           y: rectToSplit.y + rectToSplit.height / 2,
           width: rectToSplit.width,
@@ -97,7 +104,7 @@ function Home() {
       } else {
         // Split vertically into two rectangles
         newRectangles.push({
-          id: prevRectangles.length + 1,
+          id: newId1,
           x: rectToSplit.x,
           y: rectToSplit.y,
           width: rectToSplit.width / 2,
@@ -106,7 +113,7 @@ function Home() {
         });
 
         newRectangles.push({
-          id: prevRectangles.length + 2,
+          id: newId2,
           x: rectToSplit.x + rectToSplit.width / 2,
           y: rectToSplit.y,
           width: rectToSplit.width / 2,
@@ -114,6 +121,9 @@ function Home() {
           color: getRandomColor(),
         });
       }
+
+      // Increment the rectIdCounter by 2 to account for the two new rectangles
+      setRectIdCounter(rectIdCounter + 2);
 
       return [...newRects, ...newRectangles];
     });
