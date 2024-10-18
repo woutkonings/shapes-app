@@ -47,7 +47,6 @@ function Rectangle({ rect, splitRectangle }: RectangleProps) {
         width: `${width}%`,
         height: `${height}%`,
         backgroundColor: color,
-        border: '1px solid #fff',
         boxSizing: 'border-box',
         cursor: 'pointer',
       }}
