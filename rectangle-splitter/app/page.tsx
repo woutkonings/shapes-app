@@ -75,11 +75,14 @@ function Home() {
       const newRects = prevRectangles.filter((r) => r.id !== id);
 
       const splitHorizontal = Math.random() > 0.5;
+      const splitInThrees = Math.random() > 0.5;
+      const increment = splitInThrees ? 3 : 2;
       const newRectangles: RectangleType[] = [];
 
       // Use rectIdCounter to ensure unique ids
       const newId1 = rectIdCounter;
       const newId2 = rectIdCounter + 1;
+      const newId3 = rectIdCounter + 2;
 
       if (splitHorizontal) {
         // Split horizontally into two rectangles
@@ -88,41 +91,63 @@ function Home() {
           x: rectToSplit.x,
           y: rectToSplit.y,
           width: rectToSplit.width,
-          height: rectToSplit.height / 2,
+          height: rectToSplit.height / increment,
           color: getRandomColor(),
         });
 
         newRectangles.push({
           id: newId2,
           x: rectToSplit.x,
-          y: rectToSplit.y + rectToSplit.height / 2,
+          y: rectToSplit.y + rectToSplit.height / increment,
           width: rectToSplit.width,
-          height: rectToSplit.height / 2,
+          height: rectToSplit.height / increment,
           color: getRandomColor(),
         });
+
+        if (splitInThrees) {
+          newRectangles.push({
+            id: newId3,
+            x: rectToSplit.x,
+            y: rectToSplit.y + (rectToSplit.height * 2) / increment,
+            width: rectToSplit.width,
+            height: rectToSplit.height / increment,
+            color: getRandomColor(),
+          });
+        }
       } else {
         // Split vertically into two rectangles
         newRectangles.push({
           id: newId1,
           x: rectToSplit.x,
           y: rectToSplit.y,
-          width: rectToSplit.width / 2,
+          width: rectToSplit.width / increment,
           height: rectToSplit.height,
           color: getRandomColor(),
         });
 
         newRectangles.push({
           id: newId2,
-          x: rectToSplit.x + rectToSplit.width / 2,
+          x: rectToSplit.x + rectToSplit.width / increment,
           y: rectToSplit.y,
-          width: rectToSplit.width / 2,
+          width: rectToSplit.width / increment,
           height: rectToSplit.height,
           color: getRandomColor(),
         });
+
+        if (splitInThrees) {
+          newRectangles.push({
+            id: newId3,
+            x: rectToSplit.x + (rectToSplit.width * 2) / increment,
+            y: rectToSplit.y,
+            width: rectToSplit.width / increment,
+            height: rectToSplit.height,
+            color: getRandomColor(),
+          });
+        }
       }
 
       // Increment the rectIdCounter by 2 to account for the two new rectangles
-      setRectIdCounter(rectIdCounter + 2);
+      setRectIdCounter(rectIdCounter + increment);
 
       return [...newRects, ...newRectangles];
     });
